@@ -1,6 +1,8 @@
 data/
 venv/
 .idea/
+__pycache__/
+
 train_data.npy
 train_labels.npy
 validation_data.npy
