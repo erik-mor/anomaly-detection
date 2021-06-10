@@ -1,0 +1,7 @@
+data/
+venv/
+.idea/
+train_data.npy
+train_labels.npy
+validation_data.npy
+validation_labels.npy
