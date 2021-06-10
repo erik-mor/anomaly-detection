@@ -14,8 +14,12 @@ test_data = np.load("validation_data.npy")
 train_labels = np.load("train_labels.npy")
 test_labels = np.load("validation_labels.npy")
 
+# just precaution, so code will be executed on graphics card
 with tf.device('/gpu:0'):
 
+    #################################################################
+    #####              MODEL INITIALIZATION                   ######
+    ################################################################
     model = tf.keras.models.Sequential()
     model.add(layers.Input(shape=(98, 98, 3)))
 
@@ -76,12 +80,13 @@ with tf.device('/gpu:0'):
 
     model.add(layers.Dense(units=2, activation='softmax'))
     #################################################################
-    #####                  MODEL COMPILATION                  ######
+    #####            COMPILATION AND EXECUTION                ######
     ################################################################
     model.compile(optimizer=Adam(learning_rate=0.001),
                   loss=tf.keras.losses.CategoricalCrossentropy(),
                   metrics=['accuracy'])
     model.summary()
+
     X_train, X_validation, y_train, y_validation = train_test_split(train_data, train_labels, test_size=0.2)
     hist = model.fit(X_train, y_train, batch_size=100, epochs=5, verbose=2, validation_data=(X_validation, y_validation), use_multiprocessing=True, workers=8)
 
