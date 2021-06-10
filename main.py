@@ -97,3 +97,4 @@ with tf.device('/gpu:0'):
     plot_cm(Y_test, Y_pred)
     pyplot.show()
     print(classification_report(Y_test, Y_pred))
+    
