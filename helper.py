@@ -32,3 +32,4 @@ def plot_cm(y_true, y_pred, figsize=(5, 5)):
     cm.columns.name = 'Predicted'
     fig, ax = pyplot.subplots(figsize=figsize)
     sn.heatmap(cm, cmap="YlGnBu", annot=annot, fmt='', ax=ax, vmax=100, vmin=0)
+    
