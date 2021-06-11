@@ -10,11 +10,11 @@ train_labels = []
 validation_labels = []
 
 # directory with pin images
-data_path = 'data/'
+data_path = 'archive/'
 data_dir_list = os.listdir(data_path)
 
-# tqdm is used for progress bar, loop over all pin types
-for dataset in tqdm(data_dir_list, colour='white', desc='Processing...'):
+# loop over all pin types
+for dataset in tqdm(data_dir_list, colour='white', desc='Processing...'):  # tqdm used for progress bar
     data_type = os.listdir(data_path + '/' + dataset)
     if len(data_type) > 2:
         data_type = [tp for tp in data_type if os.path.splitext(tp)[1] == '']
@@ -44,23 +44,28 @@ for dataset in tqdm(data_dir_list, colour='white', desc='Processing...'):
                     validation_img_list.append(input_img_resize)
                     validation_labels.append(0 if cl.strip().lower() == 'good' else 1)
 
+    validation_img_list_np = np.array(validation_img_list)
+    validation_img_list_np = validation_img_list_np.astype('float32') / 32
+
+    if not os.path.exists(f"data/{dataset}"):
+        os.makedirs(f"data/{dataset}")
+
+    np.save(f"data/{dataset}/validation_data_{dataset}.npy", validation_img_list_np)
+    np.save(f"data/{dataset}/validation_labels_{dataset}.npy", to_categorical(validation_labels))
+    validation_img_list = []
+    validation_labels = []
+
 # convert to numpy array and normalize
 train_img_list = np.array(train_img_list)
-train_labels = np.array(train_labels)
-validation_labels = np.array(validation_labels)
-validation_img_list = np.array(validation_img_list)
 train_img_list = train_img_list.astype('float32') / 32
-validation_img_list = validation_img_list.astype('float32') / 32
+np.save(f"data/train_data.npy", train_img_list)
+np.save(f"data/train_labels.npy", to_categorical(train_labels))
 
-print(f"Training set shape: {train_img_list.shape}")
-print(f"Validation set shape: {validation_img_list.shape}")
+# print(f"Training set shape: {train_img_list.shape}")
+# print(f"Validation set shape: {validation_img_list.shape}")
+#
+# fail = np.count_nonzero(train_labels) + np.count_nonzero(validation_labels)
+# good = len(train_labels) + len(validation_labels) - fail
+# print(f"Number of good samples: {good}")
+# print(f"Number of fail samples: {fail}")
 
-fail = np.count_nonzero(train_labels) + np.count_nonzero(validation_labels)
-good = len(train_labels) + len(validation_labels) - fail
-print(f"Number of good samples: {good}")
-print(f"Number of fail samples: {fail}")
-
-np.save(f"train_data.npy", train_img_list)
-np.save(f"train_labels.npy", to_categorical(train_labels))
-np.save(f"validation_data.npy", validation_img_list)
-np.save(f"validation_labels.npy", to_categorical(validation_labels))
