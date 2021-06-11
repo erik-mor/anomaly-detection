@@ -69,3 +69,8 @@ np.save(f"data/train_labels.npy", to_categorical(train_labels))
 # print(f"Number of good samples: {good}")
 # print(f"Number of fail samples: {fail}")
 
+np.save(f"train_data.npy", train_img_list)
+np.save(f"train_labels.npy", to_categorical(train_labels))
+np.save(f"validation_data.npy", validation_img_list)
+np.save(f"validation_labels.npy", to_categorical(validation_labels))
+
