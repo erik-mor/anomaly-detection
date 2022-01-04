@@ -1,4 +1,5 @@
 # Anomaly detection
+Implementation of CNN in Keras for detecting anomalies in images of computer pins.
 
 ## How to run
 1. Create new virtual environment
