@@ -1,5 +1,5 @@
 # Anomaly detection
-Implementation of CNN in Keras for detecting anomalies in images of computer pins.
+Implementation of CNN in Keras for detecting anomalies in images of computer pins. Developed during my Internship at VSB in collaboration with Vitesco.
 
 ## How to run
 1. Create new virtual environment
